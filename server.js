@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+source = require('vinyl-source-stream');
 
 gulp.task('express', function() {
 
@@ -263,13 +264,18 @@ gulp.task('express', function() {
     confOutput += "  }\r\n}";
 
     // Update conf.js to run with protractor
-    fs.writeFile(confFile, confOutput, function(err) {
-      if (err) {
-        res.status(500).send(err);
-        console.log(err);
-      }
-      console.log('Conf.js saved successfully!');
-    });
+    //fs.writeFile(confFile, confOutput, function(err) {
+    //  if (err) {
+    //    res.status(500).send(err);
+    //    console.log(err);
+    //  }
+    //  console.log('Conf.js saved successfully!');
+    //});
+	var stream = source('conf.js');
+
+stream.end(confOutput);
+stream.pipe(gulp.dest(exportsDirectory));
+console.log('Conf.js saved successfully!');
 
     var output = "describe('" + describe[0].string + "', function(){\r\n\r\n";
 
@@ -316,17 +322,24 @@ gulp.task('express', function() {
     //console.log(output);
 
     // Update spec to run with protractor
-    fs.writeFile(specFile, output, function(err) {
-      if (err) {
-        res.status(500).send(err);
-        console.log(err);
-      }
-      console.log('Spec.js saved successfully!');
-      var message = 'Files exported to ' + exportsDirectory;
-      console.log(message);
-      res.send(message);
-    });
+    //fs.writeFile(specFile, output, function(err) {
+    //  if (err) {
+    //    res.status(500).send(err);
+    //    console.log(err);
+    //  }
+    //  console.log('Spec.js saved successfully!');
+    //  var message = 'Files exported to ' + exportsDirectory;
+    //  console.log(message);
+    //  res.send(message);
+    //});
+	var stream = source('spec.js');
 
+stream.end(output);
+stream.pipe(gulp.dest(exportsDirectory));
+var message = 'Files exported to ' + exportsDirectory;
+console.log('Spec.js saved successfully!');
+console.log(message);
+res.send(message);
 
   });
 

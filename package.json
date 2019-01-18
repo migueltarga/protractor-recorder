@@ -2,7 +2,8 @@
   "name": "protractor-recorder",
   "version": "0.0.1",
   "dependencies": {
-    "protractor": "^3.0.0"
+    "protractor": "^3.0.0",
+    "vinyl-source-stream": "^2.0.0"
   },
   "scripts": {
     "test": "gulp test",
